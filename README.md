@@ -147,3 +147,20 @@ Content-Type: application/json
 ### 5. Lainnya
 - Endpoint pembuatan event (`POST /events`) dilindungi Auth agar hanya user terdaftar yang bisa membuat event (asumsi sederhana untuk manajemen event).
 - Logic join event mencegah duplikasi (user tidak bisa join event yang sama dua kali).
+
+### 6. Jawaban Pertanyaan dari pdf 
+1. Bagian tersulit apa dari assignment ini?
+jawaban: 
+    - Memastikan user yang sedang login (Auth::id()) tersambung dengan benar ke event ID yang dituju.
+    - Mencegah duplikasi data (validasi agar user tidak bisa join ke event yang sama dua kali).
+    - Memberikan respon HTTP yang tepat (misalnya 409 Conflict jika sudah join, atau 404 Not Found jika event tidak ada) alih-alih membiarkan aplikasi crash dengan error database SQL.
+2. Jika diberi waktu 1 minggu, apa yang akan kamu perbaiki?
+jawaban: 
+    - Pemisahan Role (Admin vs Volunteer): Saat ini semua user yang login bisa membuat event. Seharusnya hanya Admin yang bisa POST /events (Create/Delete), sedangkan Volunteer hanya bisa GET dan POST /join.
+    - Pagination & Filtering: Mengganti Event::all() dengan pagination dan fitur search/filter (misalnya berdasarkan tanggal atau kategori) agar API tidak berat saat data mencapai ribuan.
+    - Automated Testing: Menambahkan Unit Test (PHPUnit/Pest) yang lebih komprehensif untuk memastikan setiap endpoint aman dari regresi saat kode diubah.
+3. Alasan Memilih Pendekatan Teknis Tersebut
+jawaban: 
+    - Laravel Sanctum: Dipilih karena ringan dan jauh lebih mudah diimplementasikan untuk API sederhana/SPA dibandingkan JWT Penuh atau Laravel Passport, tapi ini sudah aman untuk autentikasi berbasis token.
+    - Eloquent ORM & Pivot Table: Menggunakan fitur bawaan Laravel (belongsToMany, attach) adalah cara paling efisien dan "bersih" untuk menangani database relasional tanpa harus menulis query SQL manual yang rawan SQL Injection
+    - RESTful Standard: Menggunakan method HTTP standar (GET, POST) dan kode status yang konsisten (200, 201, 401, 422) agar API mudah diprediksi (predicable) dan mudah dikonsumsi oleh Frontend Developer mana pun
