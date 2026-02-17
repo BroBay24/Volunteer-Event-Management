@@ -85,6 +85,21 @@ Server akan berjalan di `http://localhost:8000`.
 | :--- | :--- | :--- | :--- | :--- |
 | **GET** | `/api/user` | Mendapatkan info user yang sedang login | - | **Ya** |
 
+### Alur Penggunaan API
+
+1.  **Register/Login**: User mendaftar atau login untuk mendapatkan `access_token`.
+2.  **Lihat Event**: User bisa melihat daftar event tanpa login (`GET /api/events`).
+3.  **Buat Event**: User login membuat event baru (`POST /api/events`).
+4.  **Join Event**: User login memilih event dan melakukan join (`POST /api/events/{id}/join`).
+
+### Error Handling
+
+API ini menangani error umum dengan kode status HTTP yang sesuai:
+- **401 Unauthorized**: Jika akses token tidak valid/kadaluarsa.
+- **404 Not Found**: Jika event yang dicari tidak ada.
+- **409 Conflict**: Jika user mencoba join event yang sama dua kali.
+- **422 Unprocessable Content**: Jika validasi input gagal (misal email kosong atau format salah).
+
 ### Contoh Request (Postman/cURL)
 
 **Login:**
