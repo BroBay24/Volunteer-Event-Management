@@ -1,0 +1,35 @@
+### Register User
+POST http://localhost:8000/api/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "orangbaru",
+    "email": "usrr@baru.com",
+    "password": "password"
+}
+
+### Login User
+POST http://localhost:8000/api/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "user@baru.com",
+    "password": "password"
+}
+
+### Get Events (Public)
+GET http://localhost:8000/api/events
+Accept: application/json
+
+### Join Event (Protected - Replace TOKEN with your actual token)
+POST http://localhost:8000/api/events/1/join
+Authorization: Bearer <TOKEN>
+Content-Type: application/json
+Accept: application/json
+
+### Get User Info (Protected - Replace TOKEN)
+GET http://localhost:8000/api/user
+Authorization: Bearer <TOKEN>
+Accept: application/json
